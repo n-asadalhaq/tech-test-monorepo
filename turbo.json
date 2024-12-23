@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["GOOGLE_APPLICATION_CREDENTIALS"],
   "ui": "tui",
   "tasks": {
     "build": {

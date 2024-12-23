@@ -1,8 +1,8 @@
-import express from "express";
+import express, { Router } from "express";
 import { fetchUserData, updateUserData } from "../controller/api";
 import { authMiddleware } from "../middleware/authMiddleware";
 
-const router = express.Router();
+const router: Router = express.Router();
 
 router.use(authMiddleware);
 router.get("/user/:id", fetchUserData);

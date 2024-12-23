@@ -1,10 +1,9 @@
-import admin from 'firebase-admin';
-import { applicationDefault } from 'firebase-admin/app';
-import { envConfig } from './env';
+import { applicationDefault, initializeApp } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { envConfig } from "./env";
 
-admin.initializeApp({
+const app = initializeApp({
   credential: applicationDefault(),
-  databaseURL: envConfig.FIREBASE_DATABASE_URL,
 });
 
-export const db = admin.firestore();
+export const db = getFirestore(app);

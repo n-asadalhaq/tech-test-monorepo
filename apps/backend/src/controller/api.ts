@@ -1,30 +1,41 @@
-import { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { fetchUser, updateUser } from "../repository/userCollection";
 
-export const fetchUserData = async (req: Request, res: Response) => {
+export const fetchUserData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   const userId = req.params.id;
 
   if (!userId) {
-    return res.status(400).json({ error: "Missing required parameters" });
+    res.status(400).json({ error: "Missing required parameters" });
+    return;
   }
 
   try {
     const user = await fetchUser(userId);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      res.status(404).json({ error: "User not found" });
     }
     res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch user data" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch user data", error });
   }
 };
 
-export const updateUserData = async (req: Request, res: Response) => {
+export const updateUserData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   const userId = req.params.id;
   const userData = req.body;
 
   if (!userId || !userData) {
-    return res.status(400).json({ error: "Missing required parameters" });
+    res.status(400).json({ error: "Missing required parameters" });
+    return;
   }
 
   try {
